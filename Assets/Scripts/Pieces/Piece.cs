@@ -29,6 +29,8 @@ namespace Pieces
             SquarePosition = squarePos;
             Team = team;
             Board = board;
+
+            gameObject.transform.position = board.CalculateBoardPositionFromSquarePosition(SquarePosition);
         }
     }
 }

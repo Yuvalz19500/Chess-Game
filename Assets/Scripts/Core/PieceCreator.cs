@@ -19,7 +19,6 @@ namespace Core
         {
             foreach (var piece in piecesPrefabs)
             {
-                Debug.Log(piece.GetComponent<Piece>().GetType().ToString());
                 _piecesDict.Add(piece.GetComponent<Piece>().GetType().Name, piece);
             }
         }

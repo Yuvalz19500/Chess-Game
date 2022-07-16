@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardStartingLayout: {fileID: 11400000, guid: 436e10d8eec3fa04ab314cfc47716c84, type: 2}
-  board: {fileID: 0}
+  board: {fileID: 1288763521}
 --- !u!114 &754463975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +536,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4371699888948967318, guid: 31270e9f38d5e7a448ae050b9633fce3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4371699888948967318, guid: 31270e9f38d5e7a448ae050b9633fce3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.22
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31270e9f38d5e7a448ae050b9633fce3, type: 3}
 --- !u!4 &1288763516 stripped
@@ -561,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomLeftSquare: {fileID: 1288763517}
+  squareSize: 1.5
 --- !u!1 &1381371319
 GameObject:
   m_ObjectHideFlags: 0
