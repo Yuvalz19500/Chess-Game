@@ -2,7 +2,7 @@
 
 namespace Pieces
 {
-    public class Queen : MonoBehaviour
+    public class Queen : Piece
     {
         
     }

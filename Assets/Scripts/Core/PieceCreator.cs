@@ -11,14 +11,16 @@ namespace Core
         [SerializeField] private GameObject[] piecesPrefabs;
         [SerializeField] private Material blackMaterial;
         [SerializeField] private Material whiteMaterial;
+        [SerializeField] private Transform piecesParentObjectTransform;
 
-        private Dictionary<string, GameObject> _piecesDict;
+        private readonly Dictionary<string, GameObject> _piecesDict = new Dictionary<string, GameObject>();
 
         private void Awake()
         {
             foreach (var piece in piecesPrefabs)
             {
-                _piecesDict.Add(piece.GetComponent<Piece>().GetType().ToString(), piece);
+                Debug.Log(piece.GetComponent<Piece>().GetType().ToString());
+                _piecesDict.Add(piece.GetComponent<Piece>().GetType().Name, piece);
             }
         }
 
@@ -27,10 +29,10 @@ namespace Core
             return team == TeamColor.Black ? blackMaterial : whiteMaterial;
         }
 
-        public GameObject CreatePiece(Type pieceType)
+        public GameObject CreatePiece(string pieceName)
         {
-            var prefab = _piecesDict[pieceType.ToString()];
-            return prefab ? Instantiate(prefab) : null;
+            var prefab = _piecesDict[pieceName];
+            return prefab ? Instantiate(prefab, piecesParentObjectTransform, true) : null;
         }
     }
 }

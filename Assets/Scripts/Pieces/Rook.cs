@@ -2,7 +2,7 @@
 
 namespace Pieces
 {
-    public class King : Piece
+    public class Rook : Piece
     {
         
     }

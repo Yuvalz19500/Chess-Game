@@ -2,7 +2,7 @@
 
 namespace Pieces
 {
-    public class Pawn : MonoBehaviour
+    public class Pawn : Piece
     {
         
     }

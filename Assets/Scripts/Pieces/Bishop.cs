@@ -2,7 +2,7 @@
 
 namespace Pieces
 {
-    public class Bishop : MonoBehaviour
+    public class Bishop : Piece
     {
         
     }

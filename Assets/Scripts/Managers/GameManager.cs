@@ -1,6 +1,7 @@
 ﻿using System;
 using Core;
 using Enums;
+using Pieces;
 using Scriptable_Objects;
 using UnityEngine;
 using Utils;
@@ -11,7 +12,7 @@ namespace Managers
     public class GameManager : Singleton<GameManager>
     {
         [SerializeField] private BoardStartingLayout boardStartingLayout;
-        [SerializeField] private Transform bottomLeftSquare;
+        [SerializeField] private Board board;
 
         private PieceCreator _pieceCreator;
 
@@ -44,14 +45,15 @@ namespace Managers
                 var pieceName = boardStartingLayout.GetPieceNameAtIndex(i);
                 var pieceColor = boardStartingLayout.GetPieceTeamColorAtIndex(i);
                 
-                var pieceType = Type.GetType(pieceName);
-                CreatePieceFromLayout(piecePos, pieceType, pieceColor);
+                CreatePieceFromLayout(piecePos, pieceName, pieceColor);
             }
         }
 
-        private void CreatePieceFromLayout(Vector2Int piecePos, Type pieceType, TeamColor pieceColor)
+        private void CreatePieceFromLayout(Vector2Int piecePos, string pieceName, TeamColor pieceTeamColor)
         {
-            var piece = _pieceCreator.CreatePiece(pieceType);
+            var piece = _pieceCreator.CreatePiece(pieceName).GetComponent<Piece>();
+            piece.SetPieceMaterial(_pieceCreator.GetTeamMaterial(pieceTeamColor));
+            piece.SetPieceData(piecePos, pieceTeamColor, board);
         }
     }
 }

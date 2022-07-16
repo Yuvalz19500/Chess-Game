@@ -12,4 +12,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671f01d36270422dba289e4aa15bc690, type: 3}
   m_Name: Starting Layout
   m_EditorClassIdentifier: 
-  boardSquares: []
+  boardSquares:
+  - position: {x: 0, y: 0}
+    pieceType: 3
+    teamColor: 0
+  - position: {x: 1, y: 0}
+    pieceType: 1
+    teamColor: 0
+  - position: {x: 2, y: 0}
+    pieceType: 2
+    teamColor: 0
+  - position: {x: 3, y: 0}
+    pieceType: 4
+    teamColor: 0
+  - position: {x: 4, y: 0}
+    pieceType: 5
+    teamColor: 0
+  - position: {x: 5, y: 0}
+    pieceType: 2
+    teamColor: 0
+  - position: {x: 6, y: 0}
+    pieceType: 1
+    teamColor: 0
+  - position: {x: 7, y: 0}
+    pieceType: 3
+    teamColor: 0
+  - position: {x: 0, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 1, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 2, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 3, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 4, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 5, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 6, y: 1}
+    pieceType: 0
+    teamColor: 0
+  - position: {x: 7, y: 1}
+    pieceType: 0
+    teamColor: 0

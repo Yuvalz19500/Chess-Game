@@ -2,7 +2,7 @@
 
 namespace Pieces
 {
-    public class Knight : MonoBehaviour
+    public class Knight : Piece
     {
         
     }
