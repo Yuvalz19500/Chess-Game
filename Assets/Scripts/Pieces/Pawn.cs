@@ -26,7 +26,7 @@ namespace Pieces
                 Piece piece = Board.GetPieceOnBoardFromSquareCoords(possibleTakeCoords);
                 if(piece == null || piece.IsPieceFromSameTeam(this)) continue;
                 
-                MovesDict.Add(Board.CalculateBoardPositionFromSquarePosition(possibleTakeCoords), PieceMoveType.Take);
+                MovesDict.Add(new MoveInfo(possibleTakeCoords,Board.CalculateBoardPositionFromSquarePosition(possibleTakeCoords)), PieceMoveType.Take);
             }
         }
 
@@ -39,7 +39,7 @@ namespace Pieces
                 Piece piece = Board.GetPieceOnBoardFromSquareCoords(possibleMoveCoords);
                 if(piece != null) break;
                 
-                MovesDict.Add(Board.CalculateBoardPositionFromSquarePosition(possibleMoveCoords), PieceMoveType.Move);
+                MovesDict.Add(new MoveInfo(possibleMoveCoords, Board.CalculateBoardPositionFromSquarePosition(possibleMoveCoords)), PieceMoveType.Move);
             }
         }
     }

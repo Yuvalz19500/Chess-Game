@@ -17,7 +17,7 @@ namespace Pieces
         protected Board Board { get; private set; }
         protected bool HasMoved { get; } = false;
         public TeamColor Team { get; private set; }
-        public Dictionary<Vector3, PieceMoveType> MovesDict { get; } = new Dictionary<Vector3, PieceMoveType>();
+        public Dictionary<MoveInfo, PieceMoveType> MovesDict { get; } = new Dictionary<MoveInfo, PieceMoveType>();
 
         public abstract void SetAvailableMoves();
         private void Awake()
@@ -30,7 +30,7 @@ namespace Pieces
             _pieceMaterialSetter = GetComponent<PieceMaterialSetter>();
             _pieceMover = GetComponent<IPieceMover>();
         }
-
+ 
         private void OnMouseDown()
         {
             Board.OnPieceSelected(this);
@@ -54,5 +54,17 @@ namespace Pieces
         {
             return Team == piece.Team;
         }
+    }
+    
+    public struct MoveInfo
+    {
+        public MoveInfo(Vector2Int gridPosition, Vector3 worldPosition)
+        {
+            this.GridPosition = gridPosition;
+            this.WorldPosition = worldPosition;
+        }
+
+        public Vector2Int GridPosition { get; }
+        public Vector3 WorldPosition { get; }
     }
 }

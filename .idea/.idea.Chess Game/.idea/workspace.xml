@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/0b/4e85e49f/CreateAssetMenuAttribute.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4a31731933e0419ca5a995305014ad37157a00/4d/01517219/Transform.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -38,10 +39,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="18724">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9584">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="18724" />
+      <option name="pid" value="9584" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -71,6 +72,7 @@
       <workItem from="1657983796637" duration="2924000" />
       <workItem from="1658012195506" duration="5655000" />
       <workItem from="1658043653869" duration="10215000" />
+      <workItem from="1658097182028" duration="4432000" />
     </task>
     <servers />
   </component>
@@ -82,37 +84,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Pieces/Piece.cs</url>
-          <line>35</line>
-          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Pieces\Piece.cs" initialLine="37" containingFunctionPresentation="method 'OnMouseDown'">
-            <startOffsets>
-              <option value="1097" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1125" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Core/Player.cs</url>
-          <line>40</line>
-          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Core\Player.cs" initialLine="40" containingFunctionPresentation="method 'GeneratePossibleMoves'">
-            <startOffsets>
-              <option value="977" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1003" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

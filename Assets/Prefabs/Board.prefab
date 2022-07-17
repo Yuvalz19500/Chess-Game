@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4967649734326591854}
   m_Layer: 0
   m_Name: Board
-  m_TagString: Untagged
+  m_TagString: Board
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2b53b68a9f54bf6b42337b0d0bd9e8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squarePrefab: {fileID: 681279503303999768, guid: 6ba50801c2124a049b1ac7277c54f636, type: 3}
+  squarePrefab: {fileID: 825942566017821382, guid: 62d1cb8db04fada4aa6537b49383b509, type: 3}
   moveMaterial: {fileID: 2100000, guid: 7ea9e59e40ba37a468a8c4c461a3e01d, type: 2}
   takeMaterial: {fileID: 2100000, guid: 57c3e716a6b0a46498a4872072ef2555, type: 2}
   moveSquaresParentObjectTransform: {fileID: 0}

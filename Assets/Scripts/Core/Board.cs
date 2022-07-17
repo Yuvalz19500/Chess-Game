@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Enums;
-using Managers;
+﻿using Managers;
+using Move_Squares;
 using Pieces;
 using UnityEngine;
 
@@ -59,11 +57,21 @@ namespace Core
 
         public void OnPieceSelected(Piece piece)
         {
-            if (_activePiece == piece) return;
+            if (_activePiece == piece)
+            {
+                DeselectPiece();
+                return;;
+            }
             if (piece.Team != GameManager.Instance.GetActiveTeamColorTurn()) return;
             
             _activePiece = piece;
             _squareCreator.DisplayAvailableSquareMoves(_activePiece.MovesDict);
+        }
+
+        private void DeselectPiece()
+        {
+            _activePiece = null;
+            _squareCreator.ClearActiveSquares();
         }
 
         public Piece GetPieceOnBoardFromSquareCoords(Vector2Int coords)
@@ -74,6 +82,10 @@ namespace Core
         public bool CheckIfCoordsAreOnBoard(Vector2Int coords)
         {
             return coords.x is >= 0 and < BoardSize && coords.y is >= 0 and < BoardSize;
+        }
+
+        public void OnSquareSelected(MoveInfo moveInfo)
+        {
         }
     }
 }
