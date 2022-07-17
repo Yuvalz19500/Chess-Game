@@ -15,6 +15,9 @@ namespace Managers
         [SerializeField] private Board board;
 
         private PieceCreator _pieceCreator;
+        private Player _whitePlayer;
+        private Player _blackPlayer;
+        private Player _activePlayer;
 
         protected override void Awake()
         {
@@ -30,13 +33,22 @@ namespace Managers
         private void SetupDependencies()
         {
             _pieceCreator = GetComponent<PieceCreator>();
+            CreatePlayers();
         }
         
         private void StartNewGame()
         {
             InitBoardLayout();
+            GenerateActiveMovesForActivePlayer();
         }
 
+        private void CreatePlayers()
+        {
+            _whitePlayer = new Player(TeamColor.White, board);
+            _blackPlayer = new Player(TeamColor.Black, board);
+            _activePlayer = _whitePlayer;
+        }
+ 
         private void InitBoardLayout()
         {
             for (var i = 0; i < boardStartingLayout.GetPiecesCount(); i++)
@@ -54,6 +66,22 @@ namespace Managers
             var piece = _pieceCreator.CreatePiece(pieceName).GetComponent<Piece>();
             piece.SetPieceMaterial(_pieceCreator.GetTeamMaterial(pieceTeamColor));
             piece.SetPieceData(piecePos, pieceTeamColor, board);
+
+            var currentPlayer = pieceTeamColor == TeamColor.Black ? _blackPlayer : _whitePlayer;
+            currentPlayer.AddPiece(piece);
+            
+            board.SetPieceOnBoard(piece, piecePos);
+        }
+        
+        private void GenerateActiveMovesForActivePlayer()
+        {
+            _activePlayer.GeneratePossibleMoves();
+        }
+
+        public void EndTurn()
+        {
+            _activePlayer = _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+            GenerateActiveMovesForActivePlayer();
         }
     }
 }

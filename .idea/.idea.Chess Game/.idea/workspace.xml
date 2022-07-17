@@ -69,7 +69,7 @@
       <updated>1657930770894</updated>
       <workItem from="1657930778614" duration="5971000" />
       <workItem from="1657983796637" duration="2924000" />
-      <workItem from="1658012195506" duration="1016000" />
+      <workItem from="1658012195506" duration="5655000" />
     </task>
     <servers />
   </component>
@@ -81,24 +81,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs</url>
-          <line>53</line>
-          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Managers\GameManager.cs" initialLine="53" containingFunctionPresentation="method 'CreatePieceFromLayout'">
-            <startOffsets>
-              <option value="1445" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1516" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -14,6 +14,7 @@ namespace Pieces
         public Vector2Int SquarePosition { get; set; }
         public Board Board { get; set; }
 
+        public abstract void SetAvailableMoves();
         private void Awake()
         {
             _pieceMaterialSetter = GetComponent<PieceMaterialSetter>();
