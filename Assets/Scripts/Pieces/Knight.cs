@@ -6,7 +6,6 @@ namespace Pieces
     {
         public override void SetAvailableMoves()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

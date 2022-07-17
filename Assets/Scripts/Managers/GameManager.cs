@@ -51,11 +51,11 @@ namespace Managers
  
         private void InitBoardLayout()
         {
-            for (var i = 0; i < boardStartingLayout.GetPiecesCount(); i++)
+            for (int i = 0; i < boardStartingLayout.GetPiecesCount(); i++)
             {
-                var piecePos = boardStartingLayout.GetPiecePositionAtIndex(i);
-                var pieceName = boardStartingLayout.GetPieceNameAtIndex(i);
-                var pieceColor = boardStartingLayout.GetPieceTeamColorAtIndex(i);
+                Vector2Int piecePos = boardStartingLayout.GetPiecePositionAtIndex(i);
+                string pieceName = boardStartingLayout.GetPieceNameAtIndex(i);
+                TeamColor pieceColor = boardStartingLayout.GetPieceTeamColorAtIndex(i);
                 
                 CreatePieceFromLayout(piecePos, pieceName, pieceColor);
             }
@@ -63,11 +63,11 @@ namespace Managers
 
         private void CreatePieceFromLayout(Vector2Int piecePos, string pieceName, TeamColor pieceTeamColor)
         {
-            var piece = _pieceCreator.CreatePiece(pieceName).GetComponent<Piece>();
+            Piece piece = _pieceCreator.CreatePiece(pieceName).GetComponent<Piece>();
             piece.SetPieceMaterial(_pieceCreator.GetTeamMaterial(pieceTeamColor));
             piece.SetPieceData(piecePos, pieceTeamColor, board);
 
-            var currentPlayer = pieceTeamColor == TeamColor.Black ? _blackPlayer : _whitePlayer;
+            Player currentPlayer = pieceTeamColor == TeamColor.Black ? _blackPlayer : _whitePlayer;
             currentPlayer.AddPiece(piece);
             
             board.SetPieceOnBoard(piece, piecePos);
@@ -82,6 +82,11 @@ namespace Managers
         {
             _activePlayer = _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
             GenerateActiveMovesForActivePlayer();
+        }
+
+        public TeamColor GetActiveTeamColorTurn()
+        {
+            return _activePlayer == _whitePlayer ? TeamColor.White : TeamColor.Black;
         }
     }
 }

@@ -1,8 +1,13 @@
-﻿using Pieces;
+﻿using System;
+using System.Collections.Generic;
+using Enums;
+using Managers;
+using Pieces;
 using UnityEngine;
 
 namespace Core
 {
+    [RequireComponent(typeof(AvailableMoveSquareCreator))]
     public class Board : MonoBehaviour
     {
         [SerializeField] private Transform bottomLeftSquare;
@@ -10,6 +15,18 @@ namespace Core
 
         private const int BoardSize = 8;
         private readonly Piece[,] _piecesGrid = new Piece[BoardSize, BoardSize];
+        private Piece _activePiece;
+        private AvailableMoveSquareCreator _squareCreator;
+
+        private void Awake()
+        {
+            SetupDependencies();
+        }
+
+        private void SetupDependencies()
+        {
+            _squareCreator = GetComponent<AvailableMoveSquareCreator>();
+        }
 
         public Vector3 CalculateBoardPositionFromSquarePosition(Vector2Int squarePos)
         {
@@ -26,9 +43,9 @@ namespace Core
 
         public bool IsPieceOnBoard(Piece piece)
         {
-            for (var i = 0; i < BoardSize; i++)
+            for (int i = 0; i < BoardSize; i++)
             {
-                for (var j = 0; j < BoardSize; j++)
+                for (int j = 0; j < BoardSize; j++)
                 {
                     if (_piecesGrid[i, j] == piece)
                     {
@@ -40,7 +57,21 @@ namespace Core
             return false;
         }
 
-        private bool CheckIfCoordsAreOnBoard(Vector2Int coords)
+        public void OnPieceSelected(Piece piece)
+        {
+            if (_activePiece == piece) return;
+            if (piece.Team != GameManager.Instance.GetActiveTeamColorTurn()) return;
+            
+            _activePiece = piece;
+            _squareCreator.DisplayAvailableSquareMoves(_activePiece.MovesDict);
+        }
+
+        public Piece GetPieceOnBoardFromSquareCoords(Vector2Int coords)
+        {
+            return CheckIfCoordsAreOnBoard(coords) ? _piecesGrid[coords.x, coords.y] : null;
+        }
+        
+        public bool CheckIfCoordsAreOnBoard(Vector2Int coords)
         {
             return coords.x is >= 0 and < BoardSize && coords.y is >= 0 and < BoardSize;
         }

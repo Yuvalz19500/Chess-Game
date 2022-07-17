@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Enums;
 using Managers;
 using Pieces;
@@ -10,7 +11,7 @@ namespace Core
     {
         private Board _board;
         public TeamColor Team { get; }
-        public List<Piece> ActivePieces { get; }
+        public List<Piece> ActivePieces { get; } = new List<Piece>();
 
         public Player(TeamColor team, Board board)
         {
@@ -35,12 +36,9 @@ namespace Core
 
         public void GeneratePossibleMoves()
         {
-            foreach (var piece in ActivePieces)
+            foreach (Piece piece in ActivePieces.Where(piece => _board.IsPieceOnBoard(piece)))
             {
-                if (_board.IsPieceOnBoard(piece))
-                {
-                    piece.SetAvailableMoves();
-                }
+                piece.SetAvailableMoves();
             }
         }
     }

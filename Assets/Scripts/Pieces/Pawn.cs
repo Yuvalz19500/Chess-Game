@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 
 namespace Pieces
 {
@@ -6,7 +7,40 @@ namespace Pieces
     {
         public override void SetAvailableMoves()
         {
-            throw new System.NotImplementedException();
+            MovesDict.Clear();
+
+            Vector2Int direction = Team == TeamColor.White ? Vector2Int.up : Vector2Int.down;
+            float range = HasMoved ? 1f : 2f;
+            Vector2Int[] takeDirections = { new Vector2Int(1, 1), new Vector2Int(-1, 1) };
+
+            CalculateAvailableMoves(direction, range);
+            CalculateAvailableTakes(direction, takeDirections);
+        }
+
+        private void CalculateAvailableTakes(Vector2Int direction, Vector2Int[] takeDirections)
+        {
+            foreach (Vector2Int takeDirection in takeDirections)
+            {
+                Vector2Int possibleTakeCoords = SquarePosition + direction * takeDirection;
+                if (!Board.CheckIfCoordsAreOnBoard(possibleTakeCoords)) continue;
+                Piece piece = Board.GetPieceOnBoardFromSquareCoords(possibleTakeCoords);
+                if(piece == null || piece.IsPieceFromSameTeam(this)) continue;
+                
+                MovesDict.Add(Board.CalculateBoardPositionFromSquarePosition(possibleTakeCoords), PieceMoveType.Take);
+            }
+        }
+
+        private void CalculateAvailableMoves(Vector2Int direction, float range)
+        {
+            for (int i = 1; i <= range; i++)
+            {
+                Vector2Int possibleMoveCoords = SquarePosition + direction * i;
+                if (!Board.CheckIfCoordsAreOnBoard(possibleMoveCoords)) break;
+                Piece piece = Board.GetPieceOnBoardFromSquareCoords(possibleMoveCoords);
+                if(piece != null) break;
+                
+                MovesDict.Add(Board.CalculateBoardPositionFromSquarePosition(possibleMoveCoords), PieceMoveType.Move);
+            }
         }
     }
 }

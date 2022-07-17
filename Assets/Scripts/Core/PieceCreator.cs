@@ -17,7 +17,7 @@ namespace Core
 
         private void Awake()
         {
-            foreach (var piece in piecesPrefabs)
+            foreach (GameObject piece in piecesPrefabs)
             {
                 _piecesDict.Add(piece.GetComponent<Piece>().GetType().Name, piece);
             }
@@ -30,7 +30,7 @@ namespace Core
 
         public GameObject CreatePiece(string pieceName)
         {
-            var prefab = _piecesDict[pieceName];
+            GameObject prefab = _piecesDict[pieceName];
             return prefab ? Instantiate(prefab, piecesParentObjectTransform, true) : null;
         }
     }
