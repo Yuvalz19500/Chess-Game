@@ -9,15 +9,16 @@ namespace Pieces
         {
             MovesDict.Clear();
 
-            Vector2Int direction = Team == TeamColor.White ? Vector2Int.up : Vector2Int.down;
+            Vector2Int moveDirection = Team == TeamColor.White ? Vector2Int.up : Vector2Int.down;
+            int takeDirection = Team == TeamColor.White ? 1 : -1;
             float range = HasMoved ? 1f : 2f;
             Vector2Int[] takeDirections = { new Vector2Int(1, 1), new Vector2Int(-1, 1) };
 
-            CalculateAvailableMoves(direction, range);
-            CalculateAvailableTakes(direction, takeDirections);
+            CalculateAvailableMoves(moveDirection, range);
+            CalculateAvailableTakes(takeDirection, takeDirections);
         }
 
-        private void CalculateAvailableTakes(Vector2Int direction, Vector2Int[] takeDirections)
+        private void CalculateAvailableTakes(int direction, Vector2Int[] takeDirections)
         {
             foreach (Vector2Int takeDirection in takeDirections)
             {

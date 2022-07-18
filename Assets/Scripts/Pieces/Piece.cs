@@ -13,6 +13,7 @@ namespace Pieces
     {
         private PieceMaterialSetter _pieceMaterialSetter;
         private IPieceMover _pieceMover;
+        private Collider _collider;
         protected Board Board { get; private set; }
         protected bool HasMoved { get; } = false;
         public TeamColor Team { get; private set; }
@@ -29,6 +30,7 @@ namespace Pieces
         {
             _pieceMaterialSetter = GetComponent<PieceMaterialSetter>();
             _pieceMover = GetComponent<IPieceMover>();
+            _collider = GetComponent<MeshCollider>();
         }
  
         private void OnMouseDown()
@@ -59,6 +61,11 @@ namespace Pieces
         {
             SquarePosition = moveInfo.GridPosition;
             _pieceMover.MoveTo(transform, moveInfo.WorldPosition);
+        }
+
+        public void ToggleCollder(bool isOn)
+        {
+            _collider.enabled = isOn;
         }
     }
     

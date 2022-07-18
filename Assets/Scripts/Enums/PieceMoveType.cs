@@ -2,7 +2,6 @@
 {
     public enum PieceMoveType
     {
-        Path,
         Move,
         Take
     }

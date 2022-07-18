@@ -1,4 +1,6 @@
-﻿using Managers;
+﻿using System.Collections.Generic;
+using Enums;
+using Managers;
 using Move_Squares;
 using Pieces;
 using UnityEngine;
@@ -28,6 +30,11 @@ namespace Core
         
         private void MoveActivePieceAndTake(Piece pieceToTake, MoveInfo moveInfo)
         {
+            GameManager.Instance.OnPieceTaken(pieceToTake);
+            Destroy(pieceToTake.gameObject);
+            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            _activePiece.MovePiece(moveInfo);
+            
             EndTurn();
         }
         
@@ -49,6 +56,16 @@ namespace Core
         {
             _piecesGrid[oldPos.x, oldPos.y] = null;
             _piecesGrid[newPos.x, newPos.y] = piece;
+        }
+
+        private void TogglePiecesColliderOnAvailableMove(Dictionary<MoveInfo, PieceMoveType> moveDict, bool toggle)
+        {
+            foreach (KeyValuePair<MoveInfo, PieceMoveType> move in moveDict)
+            {
+                if (move.Value != PieceMoveType.Take) continue;
+                Piece piece = GetPieceOnBoardFromSquareCoords(move.Key.GridPosition);
+                piece.ToggleCollder(toggle);
+            }
         }
 
         public Vector3 CalculateBoardPositionFromSquarePosition(Vector2Int squarePos)
@@ -90,11 +107,13 @@ namespace Core
             if (piece.Team != GameManager.Instance.GetActiveTeamColorTurn()) return;
             
             _activePiece = piece;
+            TogglePiecesColliderOnAvailableMove(_activePiece.MovesDict, false);
             _squareCreator.DisplayAvailableSquareMoves(_activePiece.MovesDict);
         }
 
         private void DeselectPiece()
         {
+            TogglePiecesColliderOnAvailableMove(_activePiece.MovesDict, true);
             _activePiece = null;
             _squareCreator.ClearActiveSquares();
         }

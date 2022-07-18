@@ -73,6 +73,11 @@ namespace Managers
             board.SetPieceOnBoard(piece, piecePos);
         }
         
+        private Player GetOpponentToActivePlayer()
+        {
+            return _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+        }
+        
         private void GenerateActiveMovesForActivePlayer()
         {
             _activePlayer.GeneratePossibleMoves();
@@ -87,6 +92,11 @@ namespace Managers
         public TeamColor GetActiveTeamColorTurn()
         {
             return _activePlayer == _whitePlayer ? TeamColor.White : TeamColor.Black;
+        }
+
+        public void OnPieceTaken(Piece piece)
+        {
+            GetOpponentToActivePlayer().RemovePiece(piece);
         }
     }
 }
