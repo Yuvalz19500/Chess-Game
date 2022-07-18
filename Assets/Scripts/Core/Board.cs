@@ -25,6 +25,31 @@ namespace Core
         {
             _squareCreator = GetComponent<AvailableMoveSquareCreator>();
         }
+        
+        private void MoveActivePieceAndTake(Piece pieceToTake, MoveInfo moveInfo)
+        {
+            EndTurn();
+        }
+        
+        private void MoveActivePiece(MoveInfo moveInfo)
+        {
+            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            _activePiece.MovePiece(moveInfo);
+
+            EndTurn();
+        }
+
+        private void EndTurn()
+        {
+            DeselectPiece();
+            GameManager.Instance.EndTurn();
+        }
+
+        private void UpdateBoardOnPieceMove(Piece piece, Vector2Int newPos, Vector2Int oldPos)
+        {
+            _piecesGrid[oldPos.x, oldPos.y] = null;
+            _piecesGrid[newPos.x, newPos.y] = piece;
+        }
 
         public Vector3 CalculateBoardPositionFromSquarePosition(Vector2Int squarePos)
         {
@@ -60,7 +85,7 @@ namespace Core
             if (_activePiece == piece)
             {
                 DeselectPiece();
-                return;;
+                return;
             }
             if (piece.Team != GameManager.Instance.GetActiveTeamColorTurn()) return;
             
@@ -86,6 +111,15 @@ namespace Core
 
         public void OnSquareSelected(MoveInfo moveInfo)
         {
+            Piece targetSquarePiece = GetPieceOnBoardFromSquareCoords(moveInfo.GridPosition);
+            if (targetSquarePiece)
+            {
+                MoveActivePieceAndTake(targetSquarePiece, moveInfo);
+            }
+            else
+            {
+                MoveActivePiece(moveInfo);
+            }
         }
     }
 }

@@ -13,11 +13,11 @@ namespace Pieces
     {
         private PieceMaterialSetter _pieceMaterialSetter;
         private IPieceMover _pieceMover;
-        protected Vector2Int SquarePosition { get; private set; }
         protected Board Board { get; private set; }
         protected bool HasMoved { get; } = false;
         public TeamColor Team { get; private set; }
         public Dictionary<MoveInfo, PieceMoveType> MovesDict { get; } = new Dictionary<MoveInfo, PieceMoveType>();
+        public Vector2Int SquarePosition { get; private set; }
 
         public abstract void SetAvailableMoves();
         private void Awake()
@@ -53,6 +53,12 @@ namespace Pieces
         public bool IsPieceFromSameTeam(Piece piece)
         {
             return Team == piece.Team;
+        }
+
+        public void MovePiece(MoveInfo moveInfo)
+        {
+            SquarePosition = moveInfo.GridPosition;
+            _pieceMover.MoveTo(transform, moveInfo.WorldPosition);
         }
     }
     
