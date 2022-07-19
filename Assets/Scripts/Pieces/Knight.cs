@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Enums;
+using UnityEngine;
 
 namespace Pieces
 {
@@ -15,6 +16,7 @@ namespace Pieces
             new Vector2Int(-1, -2),
             new Vector2Int(1, -2)
         };
+        
         public override void SetAvailableMoves()
         {
             MovesDict.Clear();
@@ -28,7 +30,11 @@ namespace Pieces
                 if (piece)
                 {
                     if(piece.Team == Team) continue;
-                    
+                    MovesDict.Add(new MoveInfo(possibleMoveCoord, Board.CalculateBoardPositionFromSquarePosition(possibleMoveCoord)), PieceMoveType.Take);
+                }
+                else
+                {
+                    MovesDict.Add(new MoveInfo(possibleMoveCoord, Board.CalculateBoardPositionFromSquarePosition(possibleMoveCoord)), PieceMoveType.Move);
                 }
             }
         }

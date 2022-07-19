@@ -63,7 +63,7 @@ namespace Pieces
             _pieceMover.MoveTo(transform, moveInfo.WorldPosition);
         }
 
-        public void ToggleCollder(bool isOn)
+        public void ToggleCollider(bool isOn)
         {
             _collider.enabled = isOn;
         }

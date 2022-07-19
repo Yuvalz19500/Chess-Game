@@ -64,7 +64,7 @@ namespace Core
             {
                 if (move.Value != PieceMoveType.Take) continue;
                 Piece piece = GetPieceOnBoardFromSquareCoords(move.Key.GridPosition);
-                piece.ToggleCollder(toggle);
+                piece.ToggleCollider(toggle);
             }
         }
 
@@ -139,6 +139,11 @@ namespace Core
             {
                 MoveActivePiece(moveInfo);
             }
+        }
+
+        public int GetBoardSize()
+        {
+            return BoardSize;
         }
     }
 }
