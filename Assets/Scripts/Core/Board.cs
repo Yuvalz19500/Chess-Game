@@ -27,23 +27,41 @@ namespace Core
         {
             _squareCreator = GetComponent<AvailableMoveSquareCreator>();
         }
-        
+
         private void MoveActivePieceAndTake(Piece pieceToTake, MoveInfo moveInfo)
         {
             GameManager.Instance.OnPieceTaken(pieceToTake);
             Destroy(pieceToTake.gameObject);
-            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            
             _activePiece.MovePiece(moveInfo);
+            if (CheckForPawnPromotion(_activePiece, moveInfo))
+            {
+                PromotePawn(_activePiece, moveInfo.GridPosition);
+            }
+            
+            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
             
             EndTurn();
         }
-        
+
         private void MoveActivePiece(MoveInfo moveInfo)
         {
-            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
             _activePiece.MovePiece(moveInfo);
+            if (CheckForPawnPromotion(_activePiece, moveInfo))
+            {
+                PromotePawn(_activePiece, moveInfo.GridPosition);
+            }
+            
+            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
 
             EndTurn();
+        }
+
+        private void PromotePawn(Piece piece, Vector2Int coords)
+        {
+            Destroy(piece.gameObject);
+            _activePiece =
+                GameManager.Instance.CreatePieceForPromotion(_activePiece, PieceType.Queen, coords, _activePiece.Team);
         }
 
         private void EndTurn()
@@ -67,13 +85,18 @@ namespace Core
                 piece.ToggleCollider(toggle);
             }
         }
+        
+        private bool CheckForPawnPromotion(Piece piece, MoveInfo moveInfo)
+        {
+            return piece.GetType() == typeof(Pawn) && ((moveInfo.GridPosition.y == 0 && piece.Team == TeamColor.Black) || (moveInfo.GridPosition.y == BoardSize - 1 && piece.Team == TeamColor.White)) ? true : false;
+        }
 
         public Vector3 CalculateBoardPositionFromSquarePosition(Vector2Int squarePos)
         {
             return bottomLeftSquare.position + new Vector3(squarePos.x * squareSize, 0f, squarePos.y * squareSize);
         }
 
-        public void SetPieceOnBoard(Piece piece, Vector2Int coords) 
+        public void SetPieceOnBoard(Piece piece, Vector2Int coords)
         {
             if (CheckIfCoordsAreOnBoard(coords))
             {
@@ -104,8 +127,9 @@ namespace Core
                 DeselectPiece();
                 return;
             }
+
             if (piece.Team != GameManager.Instance.GetActiveTeamColorTurn()) return;
-            
+
             _activePiece = piece;
             TogglePiecesColliderOnAvailableMove(_activePiece.MovesDict, false);
             _squareCreator.DisplayAvailableSquareMoves(_activePiece.MovesDict);
@@ -122,7 +146,7 @@ namespace Core
         {
             return CheckIfCoordsAreOnBoard(coords) ? _piecesGrid[coords.x, coords.y] : null;
         }
-        
+
         public bool CheckIfCoordsAreOnBoard(Vector2Int coords)
         {
             return coords.x is >= 0 and < BoardSize && coords.y is >= 0 and < BoardSize;

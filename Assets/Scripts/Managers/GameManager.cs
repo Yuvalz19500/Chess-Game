@@ -98,5 +98,17 @@ namespace Managers
         {
             GetOpponentToActivePlayer().RemovePiece(piece);
         }
+
+        public Piece CreatePieceForPromotion(Piece oldPawn, PieceType type, Vector2Int position, TeamColor teamColor)
+        {
+            _activePlayer.RemovePiece(oldPawn);
+            
+            Piece piece = _pieceCreator.CreatePiece(type.ToString()).GetComponent<Piece>();
+            piece.SetPieceMaterial(_pieceCreator.GetTeamMaterial(teamColor));
+            piece.SetPieceData(position, teamColor, board);
+            
+            _activePlayer.AddPiece(piece);
+            return piece;
+        }
     }
 }
