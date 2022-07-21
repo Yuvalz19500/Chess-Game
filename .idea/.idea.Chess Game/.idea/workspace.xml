@@ -39,10 +39,10 @@
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23400">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="23400" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -78,6 +78,7 @@
       <workItem from="1658187870944" duration="2036000" />
       <workItem from="1658248600184" duration="5042000" />
       <workItem from="1658363932212" duration="2507000" />
+      <workItem from="1658411659052" duration="1477000" />
     </task>
     <servers />
   </component>
@@ -95,16 +96,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Core/Board.cs</url>
-          <line>26</line>
-          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Core\Board.cs" initialLine="26" containingFunctionPresentation="method 'Awake'">
+          <line>94</line>
+          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Core\Board.cs" initialLine="94" containingFunctionPresentation="method 'HandlePlayerPickPromotion'">
             <startOffsets>
-              <option value="728" />
+              <option value="2817" />
             </startOffsets>
             <endOffsets>
-              <option value="745" />
+              <option value="2827" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="1" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -52,8 +52,8 @@ namespace Core
             GameManager.Instance.OnPieceTaken(pieceToTake);
             Destroy(pieceToTake.gameObject);
             
-            _activePiece.MovePiece(moveInfo);
             UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            _activePiece.MovePiece(moveInfo);
             
             if (CheckForPawnPromotion(_activePiece, moveInfo))
             {
@@ -67,8 +67,8 @@ namespace Core
 
         private void MoveActivePiece(MoveInfo moveInfo)
         {
-            _activePiece.MovePiece(moveInfo);
             UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            _activePiece.MovePiece(moveInfo);
             
             if (CheckForPawnPromotion(_activePiece, moveInfo))
             {
@@ -85,11 +85,11 @@ namespace Core
             OnPawnPromotion?.Invoke();
         }
         
-        private void HandlePlayerPickPromotion(PieceType promotionPiece)
+        private void HandlePlayerPickPromotion(PieceType promotionPieceType)
         {
-            Piece promoPiece = GameManager.Instance.CreatePieceForPromotion(_activePiece, promotionPiece, _activePiece.SquarePosition, _activePiece.Team);
+            Piece promotionPiece = GameManager.Instance.CreatePieceForPromotion(_activePiece, promotionPieceType, _activePiece.SquarePosition, _activePiece.Team);
             Destroy(_activePiece.gameObject);
-            _activePiece = promoPiece;
+            _activePiece = promotionPiece;
 
             UpdateBoardOnPieceMove(_activePiece, _activePiece.SquarePosition, _activePiece.SquarePosition);
             EndTurn();

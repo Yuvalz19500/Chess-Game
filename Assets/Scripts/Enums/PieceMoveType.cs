@@ -3,6 +3,7 @@
     public enum PieceMoveType
     {
         Move,
-        Take
+        Take,
+        Castle
     }
 }
