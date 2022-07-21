@@ -78,7 +78,7 @@
       <workItem from="1658187870944" duration="2036000" />
       <workItem from="1658248600184" duration="5042000" />
       <workItem from="1658363932212" duration="2507000" />
-      <workItem from="1658411659052" duration="1477000" />
+      <workItem from="1658411659052" duration="7847000" />
     </task>
     <servers />
   </component>
@@ -90,24 +90,5 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Core/Board.cs</url>
-          <line>94</line>
-          <properties documentPath="C:\Users\Yuval\Desktop\Repos\Game Dev\Chess Game\Assets\Scripts\Core\Board.cs" initialLine="94" containingFunctionPresentation="method 'HandlePlayerPickPromotion'">
-            <startOffsets>
-              <option value="2817" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2827" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

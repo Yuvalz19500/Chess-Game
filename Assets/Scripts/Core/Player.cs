@@ -41,5 +41,23 @@ namespace Core
                 piece.SetAvailableMoves();
             }
         }
+
+        public Piece[] GetPiecesAttackingOppositePieceOfType<T>() where T : Piece
+        {
+            return ActivePieces.Where(p => p.IsAttackingPieceOfType<T>()).ToArray();
+        }
+
+        public void RemoveMovesEnablingAttackOnPieceOfType<T>(Player otherPlayer, Piece attackedPiece) where T : Piece
+        {
+            foreach (KeyValuePair<MoveInfo, PieceMoveType> move in attackedPiece.MovesDict)
+            {
+                //otherPlayer.GetPieceAttackingSquare
+            }
+        }
+
+        public Piece[] GetPiecesOfType<T>() where T : Piece
+        {
+            return ActivePieces.Where(piece => piece is T).ToArray();
+        }
     }
 }

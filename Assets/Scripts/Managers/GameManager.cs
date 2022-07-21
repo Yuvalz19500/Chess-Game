@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Core;
 using Enums;
 using Pieces;
@@ -40,7 +41,7 @@ namespace Managers
         private void StartNewGame()
         {
             InitBoardLayout();
-            GenerateActiveMovesForActivePlayer();
+            GenerateActiveMovesForPlayer(_activePlayer);
         }
 
         private void CreatePlayers()
@@ -79,15 +80,45 @@ namespace Managers
             return _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
         }
         
-        private void GenerateActiveMovesForActivePlayer()
+        private void GenerateActiveMovesForPlayer(Player player)
         {
-            _activePlayer.GeneratePossibleMoves();
+            player.GeneratePossibleMoves();
+        }
+
+        private void ChangeActiveTeam()
+        {
+            _activePlayer = _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
         }
 
         public void EndTurn()
         {
-            _activePlayer = _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
-            GenerateActiveMovesForActivePlayer();
+            GenerateActiveMovesForPlayer(_activePlayer);
+            GenerateActiveMovesForPlayer(GetOpponentToActivePlayer());
+
+            if (IsGameFinished())
+            {
+                EndGame();
+            }
+            
+            ChangeActiveTeam();
+        }
+
+        private void EndGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool IsGameFinished()
+        {
+            Piece[] piecesAttackingOppositeKing = _activePlayer.GetPiecesAttackingOppositePieceOfType<King>();
+
+            if (piecesAttackingOppositeKing.Length > 0)
+            {
+                Player opponent = GetOpponentToActivePlayer();
+                Piece attackedKing = opponent.GetPiecesOfType<King>().FirstOrDefault();
+                opponent.RemoveMovesEnablingAttackOnPieceOfType<King>(_activePlayer, attackedKing);
+            }
+            return false;
         }
 
         public TeamColor GetActiveTeamColorTurn()

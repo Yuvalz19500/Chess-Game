@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Core;
 using Enums;
 using Pieces.Movement;
@@ -15,7 +16,7 @@ namespace Pieces
         private IPieceMover _pieceMover;
         private Collider _collider;
         protected Board Board { get; private set; }
-        protected bool HasMoved { get; } = false;
+        public bool HasMoved { get; private set; } = false;
         public TeamColor Team { get; private set; }
         public Dictionary<MoveInfo, PieceMoveType> MovesDict { get; } = new Dictionary<MoveInfo, PieceMoveType>();
         public Vector2Int SquarePosition { get; private set; }
@@ -61,11 +62,17 @@ namespace Pieces
         {
             SquarePosition = moveInfo.GridPosition;
             _pieceMover.MoveTo(transform, moveInfo.WorldPosition);
+            HasMoved = true;
         }
 
         public void ToggleCollider(bool isOn)
         {
             _collider.enabled = isOn;
+        }
+
+        public bool IsAttackingPieceOfType<T>() where T : Piece
+        {
+            return MovesDict.Any(move => Board.GetPieceOnBoardFromSquareCoords(move.Key.GridPosition) is T);
         }
     }
     
