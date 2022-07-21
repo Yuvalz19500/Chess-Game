@@ -32,6 +32,7 @@ namespace Managers
         
         private void SetupDependencies()
         {
+            UIManager.LoadUISceneIfNotLoaded();
             _pieceCreator = GetComponent<PieceCreator>();
             CreatePlayers();
         }

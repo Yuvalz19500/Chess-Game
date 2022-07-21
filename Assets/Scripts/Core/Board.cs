@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Enums;
 using Managers;
 using Move_Squares;
@@ -18,9 +19,27 @@ namespace Core
         private Piece _activePiece;
         private AvailableMoveSquareCreator _squareCreator;
 
+        public static event Action OnPawnPromotion; 
+
         private void Awake()
         {
             SetupDependencies();
+            RegisterEvents();
+        }
+
+        private void OnDestroy()
+        {
+            UnregisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            UIManager.OnPlayerPickPromotion += HandlePlayerPickPromotion;
+        }
+
+        private void UnregisterEvents()
+        {
+            UIManager.OnPlayerPickPromotion -= HandlePlayerPickPromotion;
         }
 
         private void SetupDependencies()
@@ -34,34 +53,46 @@ namespace Core
             Destroy(pieceToTake.gameObject);
             
             _activePiece.MovePiece(moveInfo);
-            if (CheckForPawnPromotion(_activePiece, moveInfo))
-            {
-                PromotePawn(_activePiece, moveInfo.GridPosition);
-            }
-            
             UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
             
-            EndTurn();
+            if (CheckForPawnPromotion(_activePiece, moveInfo))
+            {
+                PromotePawn();
+            }
+            else
+            {
+                EndTurn();
+            }
         }
 
         private void MoveActivePiece(MoveInfo moveInfo)
         {
             _activePiece.MovePiece(moveInfo);
+            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
+            
             if (CheckForPawnPromotion(_activePiece, moveInfo))
             {
-                PromotePawn(_activePiece, moveInfo.GridPosition);
+                PromotePawn();
             }
-            
-            UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
-
-            EndTurn();
+            else
+            {
+                EndTurn();
+            }
         }
 
-        private void PromotePawn(Piece piece, Vector2Int coords)
+        private void PromotePawn()
         {
-            Destroy(piece.gameObject);
-            _activePiece =
-                GameManager.Instance.CreatePieceForPromotion(_activePiece, PieceType.Queen, coords, _activePiece.Team);
+            OnPawnPromotion?.Invoke();
+        }
+        
+        private void HandlePlayerPickPromotion(PieceType promotionPiece)
+        {
+            Piece promoPiece = GameManager.Instance.CreatePieceForPromotion(_activePiece, promotionPiece, _activePiece.SquarePosition, _activePiece.Team);
+            Destroy(_activePiece.gameObject);
+            _activePiece = promoPiece;
+
+            UpdateBoardOnPieceMove(_activePiece, _activePiece.SquarePosition, _activePiece.SquarePosition);
+            EndTurn();
         }
 
         private void EndTurn()
