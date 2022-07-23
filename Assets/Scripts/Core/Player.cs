@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Enums;
 using Managers;
@@ -9,9 +10,10 @@ namespace Core
 {
     public class Player
     {
-        private Board _board;
-        public TeamColor Team { get; }
+        private readonly Board _board;
+        
         public List<Piece> ActivePieces { get; } = new List<Piece>();
+        public TeamColor Team { get; }
 
         public Player(TeamColor team, Board board)
         {
@@ -47,17 +49,93 @@ namespace Core
             return ActivePieces.Where(p => p.IsAttackingPieceOfType<T>()).ToArray();
         }
 
-        public void RemoveMovesEnablingAttackOnPieceOfType<T>(Player otherPlayer, Piece attackedPiece) where T : Piece
+        public void RemoveMovesEnablingAttackOnPieceOfType<T>(Player opponent, Piece selectedPiece) where T : Piece
         {
-            foreach (KeyValuePair<MoveInfo, PieceMoveType> move in attackedPiece.MovesDict)
+            List<MoveInfo> movesToRemove = new List<MoveInfo>();
+            foreach (KeyValuePair<MoveInfo, PieceMoveType> move in selectedPiece.MovesDict)
             {
-                //otherPlayer.GetPieceAttackingSquare
+                Vector2Int originalCoord = selectedPiece.SquarePosition;
+                Piece pieceOnCoord = _board.GetPieceOnBoardFromSquareCoords(move.Key.GridPosition);
+                _board.UpdateBoardOnPieceMove(selectedPiece, move.Key.GridPosition, selectedPiece.SquarePosition);
+                    
+                opponent.GeneratePossibleMoves();
+                
+                if (opponent.GetPiecesAttackingOppositePieceOfType<T>().Length != 0)
+                {
+                    movesToRemove.Add(move.Key);
+                }
+                
+                _board.UpdateBoardOnPieceMove(selectedPiece, originalCoord, move.Key.GridPosition);
+                if (pieceOnCoord)
+                {
+                    _board.UpdateBoardOnPieceMove(pieceOnCoord, pieceOnCoord.SquarePosition, pieceOnCoord.SquarePosition);
+                }
             }
+
+            foreach (MoveInfo moveToRemove in movesToRemove)
+            {
+                selectedPiece.MovesDict.Remove(moveToRemove);
+            }
+        }
+
+        public List<MoveInfo> GetMovesEnablingAttackOnPieceOfType<T>(Player opponent, Piece selectedPiece)
+            where T : Piece
+        {
+            List<MoveInfo> movesToRemove = new List<MoveInfo>();
+            foreach (KeyValuePair<MoveInfo, PieceMoveType> move in selectedPiece.MovesDict)
+            {
+                Vector2Int originalCoord = selectedPiece.SquarePosition;
+                Piece pieceOnCoord = _board.GetPieceOnBoardFromSquareCoords(move.Key.GridPosition);
+                _board.UpdateBoardOnPieceMove(selectedPiece, move.Key.GridPosition, selectedPiece.SquarePosition);
+                    
+                opponent.GeneratePossibleMoves();
+                
+                if (opponent.GetPiecesAttackingOppositePieceOfType<T>().Length != 0)
+                {
+                    movesToRemove.Add(move.Key);
+                }
+                
+                _board.UpdateBoardOnPieceMove(selectedPiece, originalCoord, move.Key.GridPosition);
+                if (pieceOnCoord)
+                {
+                    _board.UpdateBoardOnPieceMove(pieceOnCoord, pieceOnCoord.SquarePosition, pieceOnCoord.SquarePosition);
+                }
+            }
+
+            return movesToRemove;
         }
 
         public Piece[] GetPiecesOfType<T>() where T : Piece
         {
             return ActivePieces.Where(piece => piece is T).ToArray();
+        }
+
+        public bool CanCoverPieceFromAttack<T>(Player opponent) where T : Piece
+        {
+            foreach (Piece piece in ActivePieces)
+            {
+                foreach (KeyValuePair<MoveInfo, PieceMoveType> move in piece.MovesDict)
+                {
+                    Vector2Int originalCoord = piece.SquarePosition;
+                    Piece pieceOnCoord = _board.GetPieceOnBoardFromSquareCoords(move.Key.GridPosition);
+                    _board.UpdateBoardOnPieceMove(piece, move.Key.GridPosition, piece.SquarePosition);
+                    
+                    opponent.GeneratePossibleMoves();
+                    
+                    _board.UpdateBoardOnPieceMove(piece, originalCoord, move.Key.GridPosition);
+                    if (pieceOnCoord)
+                    {
+                        _board.UpdateBoardOnPieceMove(pieceOnCoord, pieceOnCoord.SquarePosition, pieceOnCoord.SquarePosition);   
+                    }
+
+                    if (opponent.GetPiecesAttackingOppositePieceOfType<T>().Length == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

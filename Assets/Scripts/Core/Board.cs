@@ -49,6 +49,7 @@ namespace Core
 
         private void MoveActivePieceAndTake(Piece pieceToTake, MoveInfo moveInfo)
         {
+            if (moveInfo == null) return;
             GameManager.Instance.OnPieceTaken(pieceToTake);
             Destroy(pieceToTake.gameObject);
             
@@ -67,6 +68,7 @@ namespace Core
 
         private void MoveActivePiece(MoveInfo moveInfo)
         {
+            if (moveInfo == null) return;
             UpdateBoardOnPieceMove(_activePiece, moveInfo.GridPosition, _activePiece.SquarePosition);
             _activePiece.MovePiece(moveInfo);
             
@@ -101,12 +103,6 @@ namespace Core
             GameManager.Instance.EndTurn();
         }
 
-        private void UpdateBoardOnPieceMove(Piece piece, Vector2Int newPos, Vector2Int oldPos)
-        {
-            _piecesGrid[oldPos.x, oldPos.y] = null;
-            _piecesGrid[newPos.x, newPos.y] = piece;
-        }
-
         private void TogglePiecesColliderOnAvailableMove(Dictionary<MoveInfo, PieceMoveType> moveDict, bool toggle)
         {
             foreach (KeyValuePair<MoveInfo, PieceMoveType> move in moveDict)
@@ -125,6 +121,12 @@ namespace Core
         public Vector3 CalculateBoardPositionFromSquarePosition(Vector2Int squarePos)
         {
             return bottomLeftSquare.position + new Vector3(squarePos.x * squareSize, 0f, squarePos.y * squareSize);
+        }
+        
+        public void UpdateBoardOnPieceMove(Piece piece, Vector2Int newPos, Vector2Int oldPos)
+        {
+            _piecesGrid[oldPos.x, oldPos.y] = null;
+            _piecesGrid[newPos.x, newPos.y] = piece;
         }
 
         public void SetPieceOnBoard(Piece piece, Vector2Int coords)
@@ -170,7 +172,7 @@ namespace Core
         {
             TogglePiecesColliderOnAvailableMove(_activePiece.MovesDict, true);
             _activePiece = null;
-            _squareCreator.ClearActiveSquares();
+            _squareCreator.ClearActiveMoveSquares();
         }
 
         public Piece GetPieceOnBoardFromSquareCoords(Vector2Int coords)
@@ -185,6 +187,7 @@ namespace Core
 
         public void OnSquareSelected(MoveInfo moveInfo)
         {
+            if (moveInfo == null) return;
             Piece targetSquarePiece = GetPieceOnBoardFromSquareCoords(moveInfo.GridPosition);
             if (targetSquarePiece)
             {
@@ -199,6 +202,16 @@ namespace Core
         public int GetBoardSize()
         {
             return BoardSize;
+        }
+
+        public void CreateCheckSquare(Vector2Int coord)
+        {
+            _squareCreator.CreateSquare(new MoveInfo(coord, CalculateBoardPositionFromSquarePosition(coord)), PieceMoveType.Check);
+        }
+
+        public void ClearActiveCheckSquares()
+        {
+            _squareCreator.ClearActiveCheckSquares();
         }
     }
 }

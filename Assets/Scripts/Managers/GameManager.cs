@@ -6,6 +6,7 @@ using Pieces;
 using Scriptable_Objects;
 using UnityEngine;
 using Utils;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -82,12 +83,22 @@ namespace Managers
         
         private void GenerateActiveMovesForPlayer(Player player)
         {
+            Player opponent = GetOpponentToActivePlayer();
+            
             player.GeneratePossibleMoves();
+            opponent.GeneratePossibleMoves();
+
+            if (opponent.GetPiecesAttackingOppositePieceOfType<King>().Length == 0) return;
+            foreach (Piece piece in player.ActivePieces)
+            {
+                player.RemoveMovesEnablingAttackOnPieceOfType<King>(opponent, piece);
+            }
         }
 
         private void ChangeActiveTeam()
         {
             _activePlayer = _activePlayer == _whitePlayer ? _blackPlayer : _whitePlayer;
+            GenerateActiveMovesForPlayer(_activePlayer);
         }
 
         public void EndTurn()
@@ -99,26 +110,37 @@ namespace Managers
             {
                 EndGame();
             }
-            
-            ChangeActiveTeam();
+            else
+            {
+                ChangeActiveTeam();
+            }
         }
 
         private void EndGame()
         {
-            throw new NotImplementedException();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private bool IsGameFinished()
         {
+            board.ClearActiveCheckSquares();
+            
             Piece[] piecesAttackingOppositeKing = _activePlayer.GetPiecesAttackingOppositePieceOfType<King>();
+            if (piecesAttackingOppositeKing.Length <= 0) return false;
 
-            if (piecesAttackingOppositeKing.Length > 0)
+            Player opponent = GetOpponentToActivePlayer();
+            Piece attackedKing = opponent.GetPiecesOfType<King>().FirstOrDefault();
+            
+            if (!attackedKing) return true;
+            foreach (Piece piece in piecesAttackingOppositeKing.Append(attackedKing))
             {
-                Player opponent = GetOpponentToActivePlayer();
-                Piece attackedKing = opponent.GetPiecesOfType<King>().FirstOrDefault();
-                opponent.RemoveMovesEnablingAttackOnPieceOfType<King>(_activePlayer, attackedKing);
+                board.CreateCheckSquare(piece.SquarePosition);
             }
-            return false;
+            
+            opponent.RemoveMovesEnablingAttackOnPieceOfType<King>(_activePlayer, attackedKing);
+            if (attackedKing.MovesDict.Count != 0) return false;
+            
+            return !opponent.CanCoverPieceFromAttack<King>(_activePlayer);
         }
 
         public TeamColor GetActiveTeamColorTurn()

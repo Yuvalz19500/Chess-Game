@@ -4,6 +4,6 @@
     {
         Move,
         Take,
-        Castle
+        Check
     }
 }

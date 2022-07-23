@@ -129,7 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 825942566017821382, guid: 62d1cb8db04fada4aa6537b49383b509, type: 3}
   moveMaterial: {fileID: 2100000, guid: 7ea9e59e40ba37a468a8c4c461a3e01d, type: 2}
-  takeMaterial: {fileID: 2100000, guid: 57c3e716a6b0a46498a4872072ef2555, type: 2}
+  takeMaterial: {fileID: 2100000, guid: 8ca0316f784790544894f5286399c160, type: 2}
+  checkMaterial: {fileID: 2100000, guid: 57c3e716a6b0a46498a4872072ef2555, type: 2}
   moveSquaresParentObjectTransform: {fileID: 0}
 --- !u!1 &4014956330334333877
 GameObject:

@@ -76,7 +76,7 @@ namespace Pieces
         }
     }
     
-    public struct MoveInfo
+    public class MoveInfo
     {
         public MoveInfo(Vector2Int gridPosition, Vector3 worldPosition)
         {
